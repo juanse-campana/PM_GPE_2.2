@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dona_app/screens/home_screen.dart'; // Importa la clase Dona
+import 'package:donas_app/screens/home_screen.dart'; // Importa la clase Dona
 
 class DonaDetailScreen extends StatelessWidget {
   final Dona dona;
