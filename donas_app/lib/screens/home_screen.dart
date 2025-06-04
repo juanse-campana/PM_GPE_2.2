@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:donas_app/screens/dona_detail_screen.dart';
+import 'package:provider/provider.dart'; // Importa provider
+import 'package:donas_app/theme_provider.dart'; // Importa el ThemeProvider
 
 class HomeScreen extends StatelessWidget {
   final List<Dona> donas = [
@@ -26,14 +28,41 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Obtiene el ThemeProvider para acceder y cambiar el tema
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+
     return Scaffold(
-      appBar: AppBar(title: Text('Nuestras Donas')),
+      appBar: AppBar(
+        title: Text('Nuestras Donas'),
+        actions: [
+          Switch(
+            value: isDarkMode,
+            onChanged: (value) {
+              themeProvider.toggleTheme(value);
+            },
+            activeColor:
+                Colors
+                    .amber, // Color del switch cuando está activo (modo oscuro)
+          ),
+          IconButton(
+            icon: Icon(
+              isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
+            ), // Icono según el tema
+            onPressed: () {
+              themeProvider.toggleTheme(!isDarkMode); // Alterna el tema
+            },
+          ),
+        ],
+      ),
       body: ListView.builder(
         itemCount: donas.length,
         itemBuilder: (context, index) {
           final dona = donas.elementAt(index);
           return Card(
-            margin: EdgeInsets.all(8.0),
+            margin: const EdgeInsets.all(8.0),
+            // El color de la Card ahora se toma del tema
+            color: Theme.of(context).cardTheme.color,
             child: ListTile(
               leading: SizedBox(
                 width: 80,
@@ -42,9 +71,20 @@ class HomeScreen extends StatelessWidget {
               ),
               title: Text(
                 dona.name,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style:
+                    Theme.of(
+                      context,
+                    ).textTheme.titleLarge, // Usa el estilo de texto del tema
               ),
-              subtitle: Text('\$${dona.price.toStringAsFixed(2)}'),
+              subtitle: Text(
+                '\$${dona.price.toStringAsFixed(2)}',
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color:
+                      isDarkMode
+                          ? Colors.lightGreenAccent
+                          : Colors.green, // Color del precio
+                ),
+              ),
               onTap: () {
                 Navigator.push(
                   context,
@@ -61,6 +101,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+// La clase Dona se mantiene igual
 class Dona {
   final String name;
   final double price;
