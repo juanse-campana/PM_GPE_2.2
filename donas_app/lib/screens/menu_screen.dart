@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:donas_app/screens/dona_detail_screen.dart';
-import 'package:provider/provider.dart'; // Importa provider
-import 'package:donas_app/theme_provider.dart'; // Importa el ThemeProvider
+import 'package:provider/provider.dart';
+import 'package:donas_app/theme_provider.dart';
+import 'package:donas_app/models/dona.dart';
 
-class HomeScreen extends StatelessWidget {
+class MenuScreen extends StatelessWidget {
   final List<Dona> donas = [
     Dona(
       name: 'Dona de Chocolate',

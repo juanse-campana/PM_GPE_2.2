@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 // Importa la clase Dona desde home_screen.dart, ya que la definiste allí
-import 'package:donas_app/screens/home_screen.dart';
+import 'package:donas_app/screens/menu_screen.dart';
 
 class DonaDetailScreen extends StatelessWidget {
   final Dona dona;
 
-  DonaDetailScreen({required this.dona});
+  DonaDetailScreen({super.key, required this.dona});
 
   @override
   Widget build(BuildContext context) {
