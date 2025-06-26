@@ -4,20 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:donas_app/screens/menu_screen.dart';
 import 'package:donas_app/screens/cart_screen.dart';
 import 'package:donas_app/screens/profile_screen.dart';
-
-// Este ChangeNotifier gestionará el índice de la pestaña seleccionada
-class BottomNavigationBarProvider with ChangeNotifier {
-  int _currentIndex = 0;
-
-  int get currentIndex => _currentIndex;
-
-  void setIndex(int index) {
-    if (_currentIndex != index) { // Solo notifica si el índice cambia
-      _currentIndex = index;
-      notifyListeners();
-    }
-  }
-}
+import 'package:donas_app/bottom_navigation_bar_provider.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});

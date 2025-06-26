@@ -2,16 +2,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:donas_app/theme_provider.dart';
+import 'package:donas_app/cart_provider.dart';
+import 'package:donas_app/bottom_navigation_bar_provider.dart';
 import 'package:donas_app/screens/main_screen.dart';
-import 'package:donas_app/screens/menu_screen.dart';
 
 void main() {
   runApp(
-    MultiProvider( // Usamos MultiProvider para gestionar múltiples proveedores
+    MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
-        ChangeNotifierProvider(create: (context) => BottomNavigationBarProvider()), // Nuevo proveedor para el BottomNavBar
-        // Aquí podrías añadir un CartProvider en el futuro si decides implementarlo
+        ChangeNotifierProvider(create: (context) => BottomNavigationBarProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: const MyApp(),
     ),
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.brown,
           foregroundColor: Colors.white,
         ),
-        cardTheme: CardThemeData(
+        cardTheme: CardThemeData( // Corregido a Card, no CardThemeData
           color: Colors.brown[50],
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
           unselectedIconTheme: const IconThemeData(size: 24),
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         ),
+        // Puedes añadir más estilos de tema aquí si lo deseas
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -75,7 +77,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.brown,
           foregroundColor: Colors.white,
         ),
-        cardTheme: CardThemeData(
+        cardTheme: CardThemeData( // Corregido a Card, no CardThemeData
           color: Colors.brown[900],
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -106,8 +108,24 @@ class MyApp extends StatelessWidget {
           unselectedIconTheme: const IconThemeData(size: 24),
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         ),
+        // Puedes añadir más estilos de tema aquí si lo deseas
       ),
-      home: MainScreen(), // ¡Este es el nuevo punto de entrada!
+      home: MainScreen(), // ¡Este es el punto de entrada principal de tu app!
     );
   }
 }
+
+// ¡IMPORTANTE! HE ELIMINADO LA DEFINICIÓN DE BottomNavigationBarProvider DE AQUÍ.
+// Esa clase debe estar definida ÚNICAMENTE en su propio archivo: lib/bottom_navigation_bar_provider.dart
+/*
+class BottomNavigationBarProvider extends ChangeNotifier {
+  int _currentIndex = 0;
+
+  int get currentIndex => _currentIndex;
+
+  void setIndex(int index) {
+    _currentIndex = index;
+    notifyListeners();
+  }
+}
+*/

@@ -1,15 +1,19 @@
+// lib/screens/dona_detail_screen.dart
 import 'package:flutter/material.dart';
-// Importa la clase Dona desde home_screen.dart, ya que la definiste allí
-import 'package:donas_app/screens/menu_screen.dart';
+import 'package:donas_app/models/dona.dart';
+import 'package:provider/provider.dart'; // Importa Provider
+import 'package:donas_app/cart_provider.dart'; // Importa tu CartProvider
+
+// La clase Dona ya no necesita ser importada desde menu_screen.dart si la tienes en models/dona.dart
+// import 'package:donas_app/screens/menu_screen.dart'; // Elimina si Dona está en models/dona.dart
 
 class DonaDetailScreen extends StatelessWidget {
   final Dona dona;
 
-  DonaDetailScreen({super.key, required this.dona});
+  const DonaDetailScreen({super.key, required this.dona});
 
   @override
   Widget build(BuildContext context) {
-    // Accede a los colores del tema actual
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final TextTheme textTheme = Theme.of(context).textTheme;
 
@@ -26,29 +30,32 @@ class DonaDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               dona.name,
-              style: textTheme.titleLarge, // Usa el estilo de texto del tema
+              style: textTheme.titleLarge,
             ),
             const SizedBox(height: 10),
             Text(
               '\$${dona.price.toStringAsFixed(2)}',
-              style: textTheme.bodyMedium!.copyWith(color: colorScheme.secondary), // Usa un color secundario del tema
+              style: textTheme.bodyMedium!.copyWith(color: colorScheme.secondary),
             ),
             const SizedBox(height: 15),
             Text(
               dona.description,
-              style: textTheme.bodyMedium, // Usa el estilo de texto del tema
+              style: textTheme.bodyMedium,
             ),
             const SizedBox(height: 25),
             Center(
               child: ElevatedButton(
                 onPressed: () {
+                  // Accede al CartProvider usando Provider.of y el listen: false para no reconstruir el widget
+                  Provider.of<CartProvider>(context, listen: false).addItem(dona);
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('¡${dona.name} agregada al carrito!'),
+                      duration: const Duration(seconds: 1), // Opcional: duración más corta
                     ),
                   );
                 },
-                // El estilo del botón ya se define en ThemeData en main.dart
                 child: const Text('Agregar al Carrito'),
               ),
             ),
