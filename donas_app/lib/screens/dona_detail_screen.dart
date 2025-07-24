@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:donas_app/models/dona.dart';
 import 'package:provider/provider.dart';
 import 'package:donas_app/cart_provider.dart';
+import 'package:donas_app/services/notification_service.dart';
 
 class DonaDetailScreen extends StatelessWidget {
   final Dona dona;
@@ -32,6 +33,7 @@ class DonaDetailScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   Provider.of<CartProvider>(context, listen: false).addItem(dona);
+                  NotificationService().scheduleAbandonedCartNotification();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('¡${dona.name} agregada al carrito!')), // CAMBIO
                   );

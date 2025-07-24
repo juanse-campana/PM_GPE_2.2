@@ -1,4 +1,5 @@
 // lib/main.dart
+import 'package:donas_app/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:donas_app/theme_provider.dart';
@@ -6,12 +7,16 @@ import 'package:donas_app/cart_provider.dart';
 import 'package:donas_app/bottom_navigation_bar_provider.dart';
 import 'package:donas_app/screens/main_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().initialize();
+  
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => BottomNavigationBarProvider()),
+        // CORRECCIÓN 1: 'Changenio' fue reemplazado por 'ChangeNotifierProvider'
         ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: const MyApp(),
@@ -28,7 +33,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Dona App',
-      debugShowCheckedModeBanner: false, // Opcional: para quitar la bandera de debug
+      debugShowCheckedModeBanner: false,
       themeMode: themeProvider.themeMode,
       theme: ThemeData(
         brightness: Brightness.light,
@@ -37,7 +42,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.brown,
           foregroundColor: Colors.white,
         ),
-        cardTheme: CardThemeData( // Corregido a Card, no CardThemeData
+        // CORRECCIÓN 2: Se usa 'CardThemeData' en lugar de 'CardTheme'
+        cardTheme: CardThemeData(
           color: Colors.brown[50],
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -60,15 +66,14 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData( // Estilos para el BottomNavigationBar
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
           selectedItemColor: Colors.brown,
           unselectedItemColor: Colors.grey,
-          backgroundColor: Colors.brown[100], // Fondo claro para el BottomNavBar en tema claro
+          backgroundColor: Colors.brown[100],
           selectedIconTheme: const IconThemeData(size: 28),
           unselectedIconTheme: const IconThemeData(size: 24),
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        // Puedes añadir más estilos de tema aquí si lo deseas
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -77,7 +82,8 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.brown,
           foregroundColor: Colors.white,
         ),
-        cardTheme: CardThemeData( // Corregido a Card, no CardThemeData
+        // CORRECCIÓN 2: Se usa 'CardThemeData' en lugar de 'CardTheme'
+        cardTheme: CardThemeData(
           color: Colors.brown[900],
           elevation: 2,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -100,32 +106,17 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData( // Estilos para el BottomNavigationBar
-          selectedItemColor: Colors.amber, // Un color que resalte en el tema oscuro
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          selectedItemColor: Colors.amber,
           unselectedItemColor: Colors.grey[400],
-          backgroundColor: Colors.grey[850], // Fondo oscuro para el BottomNavBar en tema oscuro
+          backgroundColor: Colors.grey[850],
           selectedIconTheme: const IconThemeData(size: 28),
           unselectedIconTheme: const IconThemeData(size: 24),
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        // Puedes añadir más estilos de tema aquí si lo deseas
       ),
-      home: MainScreen(), // ¡Este es el punto de entrada principal de tu app!
+      // CORRECCIÓN 3: Se quitó 'const' de MainScreen()
+      home: MainScreen(),
     );
   }
 }
-
-// ¡IMPORTANTE! HE ELIMINADO LA DEFINICIÓN DE BottomNavigationBarProvider DE AQUÍ.
-// Esa clase debe estar definida ÚNICAMENTE en su propio archivo: lib/bottom_navigation_bar_provider.dart
-/*
-class BottomNavigationBarProvider extends ChangeNotifier {
-  int _currentIndex = 0;
-
-  int get currentIndex => _currentIndex;
-
-  void setIndex(int index) {
-    _currentIndex = index;
-    notifyListeners();
-  }
-}
-*/
