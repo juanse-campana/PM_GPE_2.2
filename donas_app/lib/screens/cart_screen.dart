@@ -4,8 +4,7 @@ import 'package:donas_app/cart_provider.dart';
 import 'package:donas_app/services/notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:donas_app/models/dona.dart'; // Importa el modelo Dona
-import 'package:donas_app/models/cart_item.dart'; // Importa el modelo CartItem
+
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});

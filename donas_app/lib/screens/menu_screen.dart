@@ -5,7 +5,9 @@ import 'package:donas_app/theme_provider.dart';
 import 'package:donas_app/models/dona.dart';
 
 class MenuScreen extends StatelessWidget {
-  final List<Dona> donas = [
+  const MenuScreen({super.key});
+
+  static const List<Dona> donas = [
     Dona(
       name: 'Dona de Chocolate',
       price: 2.50,
@@ -35,7 +37,7 @@ class MenuScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nuestras Donas'),
+        title: const Text('Nuestras Donas'),
         actions: [
           Switch(
             value: isDarkMode,
@@ -43,8 +45,7 @@ class MenuScreen extends StatelessWidget {
               themeProvider.toggleTheme(value);
             },
             activeColor:
-                Colors
-                    .amber, // Color del switch cuando está activo (modo oscuro)
+                Colors.amber, // Color del switch cuando está activo (modo oscuro)
           ),
           IconButton(
             icon: Icon(
@@ -78,13 +79,12 @@ class MenuScreen extends StatelessWidget {
                     ).textTheme.titleLarge, // Usa el estilo de texto del tema
               ),
               subtitle: Text(
-                '\$${dona.price.toStringAsFixed(2)}',
+                '\${dona.price.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color:
-                      isDarkMode
+                      color: isDarkMode
                           ? Colors.lightGreenAccent
                           : Colors.green, // Color del precio
-                ),
+                    ),
               ),
               onTap: () {
                 Navigator.push(

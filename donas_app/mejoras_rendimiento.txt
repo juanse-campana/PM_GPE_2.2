@@ -1,0 +1,47 @@
+Resumen de Mejoras de Rendimiento y Calidad de Código - Proyecto Donas App
+
+Este documento resume las mejoras de rendimiento y calidad de código aplicadas al proyecto de Flutter "Donas App".
+
+## Mejoras Realizadas
+
+1.  **Optimización de Reconstrucción de Widgets con `const`:**
+    *   Se añadió la palabra clave `const` al constructor del modelo `Dona` (`lib/models/dona.dart`).
+    *   Se actualizó la pantalla de menú (`lib/screens/menu_screen.dart`) para usar constructores `const` en widgets estáticos como `Text`, `EdgeInsets` y, lo más importante, en la lista de donas.
+    *   **Impacto:** Esto reduce significativamente el trabajo de la CPU, ya que Flutter ahora puede omitir la reconstrucción de estos widgets, resultando en una interfaz de usuario más fluida.
+
+2.  **Limpieza y Mantenimiento del Código (Resolución de Issues de `flutter analyze`):**
+    *   **Importaciones no utilizadas:** Se eliminaron dos importaciones redundantes en `lib/screens/cart_screen.dart`. Esto hace que el código sea más limpio y fácil de entender.
+    *   **Llamadas a `print()`:** Se comentaron las llamadas a `print()` en `lib/services/notification_service.dart`. Esto es una buena práctica para el código de producción.
+    *   **Uso de API Obsoleta:** Se actualizó el uso del parámetro obsoleto `androidAllowWhileIdle` a la nueva API `androidScheduleMode` en `lib/services/notification_service.dart`, asegurando la compatibilidad con futuras versiones de las librerías.
+
+## Resultados de `flutter analyze`
+
+A continuación se muestra la salida de la herramienta `flutter analyze` antes y después de aplicar las mejoras.
+
+### ANTES de las mejoras:
+
+```
+Analyzing donas_app...                                          
+
+warning - Unused import: 'package:donas_app/models/dona.dart' - lib\screens\cart_screen.dart:7:8 - unused_import
+warning - Unused import: 'package:donas_app/models/cart_item.dart' - lib\screens\cart_screen.dart:8:8 - unused_import
+   info - Don't invoke 'print' in production code - lib\services\notification_service.dart:36:5 - avoid_print
+   info - 'androidAllowWhileIdle' is deprecated and shouldn't be used. Deprecated in favor of the androidScheduleMode parameter - lib\services\notification_service.dart:78:7 - deprecated_member_use
+   info - Don't invoke 'print' in production code - lib\services\notification_service.dart:81:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\services\notification_service.dart:89:5 - avoid_print
+
+
+6 issues found.
+```
+
+### DESPUÉS de las mejoras:
+
+```
+Analyzing donas_app...                                          
+No issues found!
+```
+
+## Conclusión
+
+El proyecto ahora no solo es más performante, sino que también sigue mejores prácticas de codificación, lo que lo hace más robusto y fácil de mantener a futuro.
+

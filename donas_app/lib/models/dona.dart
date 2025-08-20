@@ -7,7 +7,7 @@ class Dona {
   final String image; // Ruta de la imagen en assets
   final String description;
 
-  Dona({
+  const Dona({
     this.id,
     required this.name,
     required this.price,

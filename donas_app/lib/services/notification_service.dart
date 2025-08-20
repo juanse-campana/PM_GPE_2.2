@@ -33,7 +33,7 @@ class NotificationService {
     );
 
     await _notificationsPlugin.initialize(settings);
-    print("Servicio de Notificaciones Inicializado.");
+    // print("Servicio de Notificaciones Inicializado.");
   }
 
   // ID único para la notificación del carrito
@@ -75,17 +75,17 @@ class NotificationService {
       notificationDetails,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
 
-    print(
-      'Notificación de carrito abandonado programada para dentro de 1 minuto.',
-    );
+    // print(
+    //   'Notificación de carrito abandonado programada para dentro de 1 minuto.',
+    // );
   }
 
   // --- FUNCIÓN CLAVE PARA CANCELAR LA NOTIFICACIÓN ---
   Future<void> cancelNotification() async {
     await _notificationsPlugin.cancel(_cartNotificationId);
-    print('Notificación de carrito abandonado cancelada.');
+    // print('Notificación de carrito abandonado cancelada.');
   }
 }
